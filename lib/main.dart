@@ -22,11 +22,11 @@ class SpotifyHome extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        toolbarHeight: 0, // 🔹 Biar AppBar kosong
+        toolbarHeight: 0, // biar header manual aja
       ),
       body: Column(
         children: [
-          // 🔹 Header (avatar + filter chip) selalu di atas
+          // 🔹 Header (avatar + filter chip)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             child: Row(
@@ -61,7 +61,7 @@ class SpotifyHome extends StatelessWidget {
             ),
           ),
 
-          // 🔹 Konten yang bisa discroll
+          // 🔹 Konten scrollable
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -78,20 +78,140 @@ class SpotifyHome extends StatelessWidget {
                       crossAxisSpacing: 10,
                       childAspectRatio: 3,
                       children: [
-                        playlistBox("Lill B"),
-                        playlistBox("GD"),
-                        playlistBox("POP"),
-                        playlistBox("FAMILLAGHER'S"),
-                        playlistBox("LKL"),
-                        playlistBox("Blonde"),
-                        playlistBox("ngantuk, mau bobok"),
-                        playlistBox("channel ORANGE"),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("Lill B", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("GD", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("POP", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("FAMILLAGHER'S", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("LKL", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("Blonde", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("ngantuk, mau bobok", style: TextStyle(color: Colors.white)),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[850],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          alignment: Alignment.centerLeft,
+                          child: Text("channel ORANGE", style: TextStyle(color: Colors.white)),
+                        ),
                       ],
                     ),
                   ),
 
                   // New Release Card
-                  buildNewReleaseCard(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: [
+                          Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                width: 120,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[800],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(Icons.music_note, color: Colors.white, size: 40),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  icon: Icon(Icons.play_arrow, color: Colors.white),
+                                  onPressed: () {
+                                    print("Play New Release");
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "New Release Song",
+                                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  "Artist Name",
+                                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
                   // Recent Rotation
                   Padding(
@@ -108,11 +228,81 @@ class SpotifyHome extends StatelessWidget {
 
                   Column(
                     children: [
-                      songTile("GBP (feat. 21 Savage)", "Central Cee, 21 Savage"),
-                      songTile("Seberapa Pantas", "Sheila On 7"),
-                      songTile("That's What I Like", "Bruno Mars"),
-                      songTile("Levitating", "Dua Lipa"),
-                      songTile("Until I Found You", "Stephen Sanchez"),
+                      ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Icon(Icons.play_arrow, color: Colors.white),
+                        ),
+                        title: Text("GBP (feat. 21 Savage)", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                        subtitle: Text("Central Cee, 21 Savage", style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                        trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
+                      ),
+                      ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Icon(Icons.play_arrow, color: Colors.white),
+                        ),
+                        title: Text("Seberapa Pantas", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                        subtitle: Text("Sheila On 7", style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                        trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
+                      ),
+                      ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Icon(Icons.play_arrow, color: Colors.white),
+                        ),
+                        title: Text("That's What I Like", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                        subtitle: Text("Bruno Mars", style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                        trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
+                      ),
+                      ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Icon(Icons.play_arrow, color: Colors.white),
+                        ),
+                        title: Text("Levitating", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                        subtitle: Text("Dua Lipa", style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                        trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
+                      ),
+                      ListTile(
+                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[800],
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Icon(Icons.play_arrow, color: Colors.white),
+                        ),
+                        title: Text("Until I Found You", style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
+                        subtitle: Text("Stephen Sanchez", style: TextStyle(color: Colors.grey[400], fontSize: 12)),
+                        trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
+                      ),
                     ],
                   ),
 
@@ -138,97 +328,6 @@ class SpotifyHome extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.add_box_outlined), label: "Create"),
         ],
       ),
-    );
-  }
-
-  Widget playlistBox(String title) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[850],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: EdgeInsets.all(12),
-      alignment: Alignment.centerLeft,
-      child: Text(title, style: TextStyle(color: Colors.white)),
-    );
-  }
-
-  Widget buildNewReleaseCard() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[800],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(Icons.music_note, color: Colors.white, size: 40),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    shape: BoxShape.circle,
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.play_arrow, color: Colors.white),
-                    onPressed: () {
-                      print("Play New Release");
-                    },
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "New Release Song",
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "Artist Name",
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget songTile(String title, String artist) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      leading: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: Colors.grey[800],
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Icon(Icons.play_arrow, color: Colors.white),
-      ),
-      title: Text(title,
-          style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600)),
-      subtitle: Text(artist, style: TextStyle(color: Colors.grey[400], fontSize: 12)),
-      trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
     );
   }
 }
