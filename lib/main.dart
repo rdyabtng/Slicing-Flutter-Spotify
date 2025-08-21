@@ -15,26 +15,6 @@ class SpotifyClone extends StatelessWidget {
 }
 
 class SpotifyHome extends StatelessWidget {
-  final List<String> filters = ["All", "Music", "Podcasts"];
-  final List<String> playlists = [
-    "Lill B",
-    "GD",
-    "POP",
-    "FAMILLAGHER'S",
-    "LKL",
-    "Blonde",
-    "ngantuk, mau bobok",
-    "channel ORANGE"
-  ];
-
-  final List<Map<String, String>> recents = [
-    {"title": "GBP (feat. 21 Savage)", "artist": "Central Cee, 21 Savage"},
-    {"title": "Seberapa Pantas", "artist": "Sheila On 7"},
-    {"title": "That's What I Like", "artist": "Bruno Mars"},
-    {"title": "Levitating", "artist": "Dua Lipa"},
-    {"title": "Until I Found You", "artist": "Stephen Sanchez"},
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,58 +40,59 @@ class SpotifyHome extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Row(
-                children: filters.map((filter) {
-                  bool isActive = filter == "All";
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: ChoiceChip(
-                      label: Text(
-                        filter,
-                        style: TextStyle(
-                          color: isActive ? Colors.black : Colors.white,
-                        ),
-                      ),
-                      selected: isActive,
-                      selectedColor: Colors.green,
-                      backgroundColor: Colors.grey[800],
-                      onSelected: (_) {},
-                    ),
-                  );
-                }).toList(),
+                children: [
+                  ChoiceChip(
+                    label: Text("All",
+                        style: TextStyle(color: Colors.black)),
+                    selected: true,
+                    selectedColor: Colors.green,
+                    backgroundColor: Colors.grey[800],
+                    onSelected: (_) {},
+                  ),
+                  SizedBox(width: 8),
+                  ChoiceChip(
+                    label: Text("Music",
+                        style: TextStyle(color: Colors.white)),
+                    selected: false,
+                    backgroundColor: Colors.grey[800],
+                    onSelected: (_) {},
+                  ),
+                  SizedBox(width: 8),
+                  ChoiceChip(
+                    label: Text("Podcasts",
+                        style: TextStyle(color: Colors.white)),
+                    selected: false,
+                    backgroundColor: Colors.grey[800],
+                    onSelected: (_) {},
+                  ),
+                ],
               ),
             ),
 
             // 🔹 Grid Playlist
             Padding(
               padding: const EdgeInsets.all(12.0),
-              child: GridView.builder(
+              child: GridView.count(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: playlists.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 3,
-                ),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[850],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.all(12),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      playlists[index],
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  );
-                },
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                childAspectRatio: 3,
+                children: [
+                  playlistCard("Lill B"),
+                  playlistCard("GD"),
+                  playlistCard("POP"),
+                  playlistCard("FAMILLAGHER'S"),
+                  playlistCard("LKL"),
+                  playlistCard("Blonde"),
+                  playlistCard("ngantuk, mau bobok"),
+                  playlistCard("channel ORANGE"),
+                ],
               ),
             ),
 
-            // 🔹 New Release Card (gede)
+            // 🔹 New Release Card
             buildNewReleaseCard(),
 
             // 🔹 Recent Rotation
@@ -127,38 +108,14 @@ class SpotifyHome extends StatelessWidget {
               ),
             ),
 
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: recents.length,
-              itemBuilder: (context, index) {
-                final song = recents[index];
-                return ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  leading: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[800],
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Icon(Icons.play_arrow, color: Colors.white),
-                  ),
-                  title: Text(
-                    song["title"]!,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: Text(
-                    song["artist"]!,
-                    style: TextStyle(color: Colors.grey[400], fontSize: 12),
-                  ),
-                  trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
-                );
-              },
+            Column(
+              children: [
+                recentSong("GBP (feat. 21 Savage)", "Central Cee, 21 Savage"),
+                recentSong("Seberapa Pantas", "Sheila On 7"),
+                recentSong("That's What I Like", "Bruno Mars"),
+                recentSong("Levitating", "Dua Lipa"),
+                recentSong("Until I Found You", "Stephen Sanchez"),
+              ],
             ),
 
             SizedBox(height: 80),
@@ -186,7 +143,49 @@ class SpotifyHome extends StatelessWidget {
     );
   }
 
-  // 🔹 Widget New Release gede
+  // 🔹 Playlist Card
+  Widget playlistCard(String title) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[850],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      padding: EdgeInsets.all(12),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        title,
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  // 🔹 Recent Song Tile
+  Widget recentSong(String title, String artist) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      leading: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.grey[800],
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Icon(Icons.play_arrow, color: Colors.white),
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+            color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
+      ),
+      subtitle: Text(
+        artist,
+        style: TextStyle(color: Colors.grey[400], fontSize: 12),
+      ),
+      trailing: Icon(Icons.more_vert, color: Colors.grey[400]),
+    );
+  }
+
+  // 🔹 Widget New Release
   Widget buildNewReleaseCard() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -212,7 +211,6 @@ class SpotifyHome extends StatelessWidget {
                   child: const Icon(Icons.music_note,
                       color: Colors.white, size: 40),
                 ),
-                // 🔹 Tombol Play di atas album cover
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.green,
